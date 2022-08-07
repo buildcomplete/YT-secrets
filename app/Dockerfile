@@ -3,5 +3,7 @@ RUN apk update
 
 # Create main folder for attached storage
 RUN mkdir /storage
+RUN mkdir /storage/secrets
 WORKDIR /App
-CMD ["python", "secret-sharing-app.py"]
+ENV PYTHONPATH=/App
+CMD ["python", "-m", "unittest", "discover", "-v"]
