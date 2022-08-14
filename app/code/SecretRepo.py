@@ -7,9 +7,8 @@ def filenameFromUniqueId(id):
 
 def Store(secret):
     secretId =str(uuid.uuid4())
-    f = open(filenameFromUniqueId(secretId), 'a')
-    f.write(secret)
-    f.close()
+    with open(filenameFromUniqueId(secretId), 'a') as f:
+        f.write(secret)
     return secretId
 
 def DeleteSecret(secretId):
