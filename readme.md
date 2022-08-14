@@ -23,6 +23,11 @@ docker run -it -p 80:80 -v [absolute-path-to-app]:/App yt-secrets sh
 flask --app SecretController  run -h 0.0.0.0 -p 80
 ```
 
+### To test the application after building the docker image
+```sh
+docker run -v /var/www/secret_app/app:/App test-secret -rm pytest
+```
+
 ## Configure automation
 The following steps should be automated
 * Testing the code on deploy
