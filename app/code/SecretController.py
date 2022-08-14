@@ -35,3 +35,4 @@ def ViewSecret(secretId):
     return render_template(
         'no_such_secret.html',
         url_for_new_secret=url_for('EnterSecret'))
+
