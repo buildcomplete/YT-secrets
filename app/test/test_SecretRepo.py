@@ -25,7 +25,3 @@ class test_SecretRepo(unittest.TestCase):
             SecretExceptions.MissingSecretException,
             Repo.Retrieve,
             secretId)
-
-    # def test_what_happens_when_a_test_fails_for_github_actions(self):
-    #     self.assertTrue(
-    #         False)
