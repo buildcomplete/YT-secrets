@@ -5,6 +5,10 @@ The repo contains code and test
 
 To run the application, you need to install python v?
 
+Status:
+* [![TestApplication](https://github.com/buildcomplete/YT-secrets/actions/workflows/test-secret-sharing.yml/badge.svg)](https://github.com/buildcomplete/YT-secrets/actions/workflows/test-secret-sharing.yml)
+* [![Deploy](https://github.com/buildcomplete/YT-secrets/actions/workflows/deploy-secret-sharing.yml/badge.svg?event=workflow_run)](https://github.com/buildcomplete/YT-secrets/actions/workflows/deploy-secret-sharing.yml)
+
 ## Manual setup 
 * Install python v?
 * configure python path, ie: export __PYTHONPATH=~/source/YT-secrets/app__
