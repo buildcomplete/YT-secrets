@@ -1,0 +1,18 @@
+version: "3.2"
+services:
+  secret-app-runtime:
+    build: './app/'
+    networks:
+      - frontend
+    volumes:
+      - ./app:/App
+      - SecretStorage:/storage/secrets
+    ports:
+      - "5000:5000"
+
+volumes:
+  SecretStorage:
+    external: false
+
+networks:
+  frontend:

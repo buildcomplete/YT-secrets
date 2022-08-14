@@ -9,4 +9,4 @@ RUN mkdir /storage
 RUN mkdir /storage/secrets
 WORKDIR /App
 ENV PYTHONPATH=/App
-CMD ["python", "-m", "unittest", "discover", "-v"]
+CMD ["flask","--app", "code/SecretController",  "run", "-h", "0.0.0.0", "-p", "5000"]
