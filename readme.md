@@ -31,15 +31,15 @@ The following steps should be automated
 ### Manual Deployment to a server
 Before doing any automation, I will test all the steps manually, the provisioning (start up) of the server will not be automated.
 1) Configure a server where we can run the application, I will use Digital Ocean [![DigitalOcean Referral Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg)](https://www.digitalocean.com/?refcode=dcd9cffbef59&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
-   * Spin-up server
-   * Create a certificate for secure access
-   * Configure Firewall
-   * Install docker and docker-compose
-2) Push the application to the server (using rsync)
-3) Start the application using docker-compose
-   * Create a docker-compose file that mounts the volumes
+   * Spin-up server✔
+   * Create a certificate for secure access✔
+   * Configure Firewall✔
+   * Install docker✔ and docker-compose✔
+2) Push the application to the server (using rsync)✔
+3) Start the application using docker-compose✔
+   * Create a docker-compose file that mounts the volumes✔
    * Start the application as a service
-4) Update application to use a proper server (notice the warning when starting using flask development server)
+4) Update application to use a proper server✔ (notice the warning when starting using flask development server)
 
 ### Automatic deployment 
 1) Setup github action to run test
