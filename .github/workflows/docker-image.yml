@@ -16,5 +16,5 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: |
-        working-directory: ${GITHUB_WORKSPACE}/app
-        docker build . --file ./Dockerfile --tag my-image-name:$(date +%s)
+        working-directory: ${{ github.workspace }}/app
+        docker build . --file ${{ github.workspace }}/app/Dockerfile --tag my-image-name:$(date +%s)
