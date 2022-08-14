@@ -3,7 +3,7 @@ import os
 import code.SecretExceptions as SecretExceptions
 
 def filenameFromUniqueId(id):
-    return "/storage/secrets/{}.txt".format(id)
+    return f"/storage/secrets/{id}.txt"
 
 def Store(secret):
     secretId =str(uuid.uuid4())
@@ -16,8 +16,8 @@ def DeleteSecret(secretId):
         filenameFromUniqueId(secretId))
 
 def SecretExists(secretId):
-    filename = filenameFromUniqueId(secretId)
-    return os.path.exists(filename)
+    return os.path.exists(
+        filenameFromUniqueId(secretId))
 
 def Retrieve(secretId):
     if not SecretExists(secretId):
