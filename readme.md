@@ -1,18 +1,11 @@
 # Secret app
 The secret app is made to exchange secrets.
 
-The repo contains code and test
-
-To run the application, you need to install python v?
+The repo contains code, test and docker file
 
 Status:
 * [![TestApplication](https://github.com/buildcomplete/YT-secrets/actions/workflows/test-secret-sharing.yml/badge.svg)](https://github.com/buildcomplete/YT-secrets/actions/workflows/test-secret-sharing.yml)
 * [![Deploy](https://github.com/buildcomplete/YT-secrets/actions/workflows/deploy-secret-sharing.yml/badge.svg?event=workflow_run)](https://github.com/buildcomplete/YT-secrets/actions/workflows/deploy-secret-sharing.yml)
-
-## Manual setup 
-* Install python v?
-* configure python path, ie: export __PYTHONPATH=~/source/YT-secrets/app__
-* Create folder for secrets and give write access to __/storage/secrets/__
 
 ## Run using Docker
 Or instead of the manual setup, build and run the docker image with the following commands
@@ -48,7 +41,8 @@ Before doing any automation, I will test all the steps manually, the provisionin
 3) Start the application using docker-compose✔
    * Create a docker-compose file that mounts the volumes✔
    * Start the application as a service
-4) Update application to use a proper server✔ (notice the warning when starting using flask development server)
+4) Update application to use a proper server ([Gunicorn](https://gunicorn.org/))✔ (notice the warning when starting using flask development server) 
+
 
 ### Automatic deployment 
 1) Setup github action to run test
@@ -56,3 +50,30 @@ Before doing any automation, I will test all the steps manually, the provisionin
    * Convert private key to not use a password
    * Install private key in github secrets
    * push using github (Stop the application before push and restart?)
+
+## Enabling Encryption of communication
+Without encrypted communication, people can read all the data send, since we are sharing secrets, we obviously want to make sure they stay secret.
+```mermaid
+graph LR;
+    you -- 1. secret in clear text --> flask-app;
+    your-friend -- 2. request secret --> flask-app
+    flask-app -- 3. secret in clear text --> your-friend;
+```
+With encryption, the communication becomes impossible to read, so the secret can stay safe, I enable encryption using nginx and certbot, this installs a proxy that enforces encrypted communication on the internet
+```mermaid
+graph LR;   
+   you -- 1A. %$$%^#\ secret encrypted --> nginx-with-https;
+   nginx-with-https -. 1B. secret in clear text .-> flask-app;
+   your-friend -- 2A. request secret --> nginx-with-https
+   nginx-with-https -. 2B. request .-> flask-app;
+   flask-app -. 3A. secret in clear text .-> nginx-with-https
+   nginx-with-https -- 3B %$$%^#\ secret encrypted --> your-friend
+```
+
+Change port on docker application to 5000
+Test by deploying, and open firewall port 5000 
+Install nginx
+setup proxy to application
+* Enable proxy pass of domain name
+* Update werkzeug so it handle proxy stuff correctly
+Install certbot and enable to encrypt the communication
