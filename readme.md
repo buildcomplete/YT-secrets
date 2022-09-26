@@ -54,12 +54,44 @@ Before doing any automation, I will test all the steps manually, the provisionin
 ## Enabling Encryption of communication
 Without encrypted communication, people can read all the data send, since we are sharing secrets, we obviously want to make sure they stay secret.
 ```mermaid
-graph LR;
-    you -- 1. secret in clear text --> flask-app;
-    your-friend -- 2. request secret --> flask-app
-    flask-app -- 3. secret in clear text --> your-friend;
+sequenceDiagram
+   Actor You
+   Participant App
+   Actor Friend
+   
+   You->>+App: Secret
+   App->>-You: Secret link
+   You->>Friend:Email Secret link
+   Friend->>+App:Secret link
+   App->>-Friend:Secret
 ```
+
 With encryption, the communication becomes impossible to read, so the secret can stay safe, I enable encryption using nginx and certbot, this installs a proxy that enforces encrypted communication on the internet
+```mermaid
+sequenceDiagram
+   Actor You
+   Participant Proxy
+   Participant App
+   Actor Friend
+   
+   You->>+Proxy: Encrypted(Secret)
+   rect rgb(85,55,55)
+      Proxy->>+App:Secret
+      App->>-Proxy:Secret link
+   end
+   Proxy->>-You: Encrypted(Secret link)
+   
+   You->>Friend:Email Secret link
+
+   Friend->>+Proxy:Encrypted(Secret link)
+   rect rgb(85,55,55)
+      Proxy->>+App:Secret link
+      App->>-Proxy:Secret
+   end
+   Proxy->>Friend:Encrypted(Secret)
+```
+
+
 ```mermaid
 graph LR;   
    you -- 1A. %$$%^#\ secret encrypted --> nginx-with-https;
@@ -67,7 +99,7 @@ graph LR;
    your-friend -- 2A. request secret --> nginx-with-https
    nginx-with-https -. 2B. request .-> flask-app;
    flask-app -. 3A. secret in clear text .-> nginx-with-https
-   nginx-with-https -- 3B %$$%^#\ secret encrypted --> your-friend
+   nginx-with-https -- 3B %$$%^#\ secret encrypted -->your-friend
 ```
 
 Change port on docker application to 5000
