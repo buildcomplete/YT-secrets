@@ -55,9 +55,9 @@ Before doing any automation, I will test all the steps manually, the provisionin
 Without encrypted communication, people can read all the data send, since we are sharing secrets, we obviously want to make sure they stay secret.
 ```mermaid
 sequenceDiagram
+   Actor Friend
    Actor You
    Participant App
-   Actor Friend
    
    You->>+App: Secret
    App->>-You: Secret link
