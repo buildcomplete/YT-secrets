@@ -69,10 +69,10 @@ sequenceDiagram
 With encryption, the communication becomes impossible to read, so the secret can stay safe, I enable encryption using nginx and certbot, this installs a proxy that enforces encrypted communication on the internet
 ```mermaid
 sequenceDiagram
+   Actor Friend
    Actor You
    Participant Proxy
    Participant App
-   Actor Friend
    
    You->>+Proxy: Encrypted(Secret)
    rect rgb(185,155,155)
@@ -81,7 +81,7 @@ sequenceDiagram
    end
    Proxy->>-You: Encrypted(Secret link)
    
-   You->>Friend:Email Secret link
+   You->>Friend:Send Secret link (email/telegram)
 
    Friend->>+Proxy:Encrypted(Secret link)
    rect rgb(185,155,155)
