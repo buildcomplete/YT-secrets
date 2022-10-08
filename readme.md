@@ -75,7 +75,7 @@ sequenceDiagram
    Actor Friend
    
    You->>+Proxy: Encrypted(Secret)
-   rect rgb(85,55,55)
+   rect rgb(185,155,155)
       Proxy->>+App:Secret
       App->>-Proxy:Secret link
    end
@@ -84,27 +84,22 @@ sequenceDiagram
    You->>Friend:Email Secret link
 
    Friend->>+Proxy:Encrypted(Secret link)
-   rect rgb(85,55,55)
+   rect rgb(185,155,155)
       Proxy->>+App:Secret link
       App->>-Proxy:Secret
    end
    Proxy->>Friend:Encrypted(Secret)
 ```
 
-
-```mermaid
-graph LR;   
-   you -- 1A. %$$%^#\ secret encrypted --> nginx-with-https;
-   nginx-with-https -. 1B. secret in clear text .-> flask-app;
-   your-friend -- 2A. request secret --> nginx-with-https
-   nginx-with-https -. 2B. request .-> flask-app;
-   flask-app -. 3A. secret in clear text .-> nginx-with-https
-   nginx-with-https -- 3B %$$%^#\ secret encrypted -->your-friend
-```
-
 Change port on docker application to 5000
-Test by deploying, and open firewall port 5000 
+
+docker-compose.yml
+```docker 
+    ports:
+      - "5000:5000"
+```
 Install nginx
+
 setup proxy to application
 * Enable proxy pass of domain name
 * Update werkzeug so it handle proxy stuff correctly
