@@ -40,8 +40,8 @@ Before doing any automation, I will test all the steps manually, the provisionin
 2) Push the application to the server (using rsync)✔
 3) Start the application using docker-compose✔
    * Create a docker-compose file that mounts the volumes✔
-   * Start the application as a service
-4) Update application to use a proper server ([Gunicorn](https://gunicorn.org/))✔ (notice the warning when starting using flask development server) 
+   * Start the application as a service✔
+4) Update application to use a proper server ([Gunicorn](https://gunicorn.org/))✔
 
 
 ### Automatic deployment 
