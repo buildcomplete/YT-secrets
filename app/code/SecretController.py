@@ -24,9 +24,24 @@ def ConfirmSecretSaved(secretId):
     return render_template(
         'confirm_secret_saved.html',
         secret_url = url_for(
-            'ViewSecret',
+            'ConfirmViewSecret',
             secretId = secretId,
             _external = True))
+
+@app.route('/confirmview/secret/<uuid:secretId>')
+def ConfirmViewSecret(secretId):
+    if (repo.SecretExists(secretId)):
+        return render_template(
+            'confirm_view_secret.html',
+             secret_url = url_for(
+                'ViewSecret',
+                secretId = secretId,
+                _external = True))
+    return render_template(
+        'no_such_secret.html',
+        url_for_new_secret=url_for('EnterSecret'))
+
+
 
 @app.route('/view/secret/<uuid:secretId>')
 def ViewSecret(secretId):
