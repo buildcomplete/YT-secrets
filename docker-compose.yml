@@ -2,6 +2,7 @@ version: "3.2"
 services:
   secret-app-runtime:
     build: './app/'
+    restart: unless-stopped
     networks:
       - frontend
     volumes:
