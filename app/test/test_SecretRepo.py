@@ -8,20 +8,22 @@ class test_SecretRepo(unittest.TestCase):
 
     def test_repo_store_and_get_secret(self):
         theSecret = "hello from test"
-        secretId = Repo.Store(theSecret)
-        retrievedSecret = Repo.Retrieve(secretId)
+        (secretId, key) = Repo.Store(theSecret)
+        retrievedSecret = Repo.Retrieve(secretId, key)
         assert retrievedSecret == theSecret
 
     def test_repo_cannot_retrieve_non_stored_secret(self):
         self.assertRaises(
             SecretExceptions.MissingSecretException, 
             Repo.Retrieve,
-            "no-such-secret")
+            "no-such-secret",
+            "no-such-key")
     
     def test_repo_cannot_retrieve_more_than_once(self):
-        secretId = Repo.Store("new secret")
-        Repo.Retrieve(secretId)
+        (secretId, key) = Repo.Store("new secret")
+        Repo.Retrieve(secretId, key)
         self.assertRaises(
             SecretExceptions.MissingSecretException,
             Repo.Retrieve,
-            secretId)
+            secretId,
+            key)

@@ -4,6 +4,7 @@ RUN pip install flask
 RUN pip install flask-unittest
 RUN pip install pytest
 RUN pip install gunicorn
+RUN pip install cryptography
 
 # Create main folder for attached storage
 RUN mkdir /storage
