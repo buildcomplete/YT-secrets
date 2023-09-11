@@ -27,3 +27,21 @@ class test_SecretRepo(unittest.TestCase):
             Repo.Retrieve,
             secretId,
             key)
+
+
+    def test_repo_cannot_retrieve_with_invalid_key(self):
+        (secretId, key) = Repo.Store("new secret")
+        self.assertRaises(
+            SecretExceptions.InvalidKeyException,
+            Repo.Retrieve,
+            secretId,
+            "pling")
+
+    def test_repo_cannot_retrieve_with_wrong_key(self):
+        (secretId, key) = Repo.Store("new secret")
+        (secretId2, key2) = Repo.Store("new secret")
+        self.assertRaises(
+            SecretExceptions.KeyMismatchException,
+            Repo.Retrieve,
+            secretId,
+            key2)

@@ -1,6 +1,7 @@
 import uuid
 import os
 from cryptography.fernet import Fernet
+from cryptography.fernet import InvalidToken
 import code.SecretExceptions as SecretExceptions
 
 def filenameFromUniqueId(id):
@@ -25,9 +26,17 @@ def SecretExists(secretId):
 def Retrieve(secretId, key):
     if not SecretExists(secretId):
         raise SecretExceptions.MissingSecretException()
-    fer = Fernet(key)
-    with open(filenameFromUniqueId(secretId)) as f:
-        secret = fer.decrypt(f.read()).decode()
+    
+    try:
+        fer = Fernet(key)
+    except ValueError:
+        raise SecretExceptions.InvalidKeyException()
+    
+    try:
+        with open(filenameFromUniqueId(secretId)) as f:
+            secret = fer.decrypt(f.read()).decode()
+    except InvalidToken:
+        raise SecretExceptions.KeyMismatchException()
+        
     DeleteSecret(secretId)
     return secret
-    
