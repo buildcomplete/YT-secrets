@@ -1,6 +1,7 @@
 from flask import Flask, make_response, render_template, url_for, request, redirect
 from werkzeug.middleware.proxy_fix import ProxyFix
 import code.SecretRepo as repo
+import code.SecretExceptions as SecretExceptions
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1)
@@ -47,11 +48,17 @@ def ConfirmViewSecret(secretId, secretKey):
 
 @app.route('/view/secret/<uuid:secretId>/<secretKey>')
 def ViewSecret(secretId, secretKey):
-    if (repo.SecretExists(secretId)):
+    try:
+        if (repo.SecretExists(secretId)):
+            return render_template(
+                'view_secret.html',
+                secret=repo.Retrieve(secretId, secretKey))
+    except (SecretExceptions.InvalidKeyException, SecretExceptions.KeyMismatchException):
         return render_template(
-            'view_secret.html',
-            secret=repo.Retrieve(secretId, secretKey))
+            'invalid_key.html',
+            url_for_new_secret=url_for('EnterSecret')), 406
+
     return render_template(
         'no_such_secret.html',
-        url_for_new_secret=url_for('EnterSecret'))
+        url_for_new_secret=url_for('EnterSecret')), 410
 
